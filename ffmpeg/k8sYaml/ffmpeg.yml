@@ -29,7 +29,7 @@ spec:
         - name: OUTPUTFORMAT
           value: '-f flv'
         - name: RTMPTO
-          value: 'rtmp://a326dace498d5484b8124cc360792d70-801149410.ap-northeast-1.elb.amazonaws.com/live/720'
+          value: 'rtmp://ossrs/live/720'
         resources:
           limits:
             cpu: 2500m
