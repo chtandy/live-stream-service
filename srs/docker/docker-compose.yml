@@ -1,0 +1,33 @@
+version: '3'
+services:
+  ossrs:
+    image: ossrs/srs:3
+    container_name: ossrs
+    hostname: ossrs
+    entrypoint: ["/bin/bash", "-c"]
+    command: ["sed  -i -e  '/vhost __defaultVhost__/a\\    tcp_nodelay     on;' conf/srs.conf;
+                sed  -i -e  '/tcp_nodelay/a\\    min_latency     on;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    }' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        mr_latency  100;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        mr off;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    publish {' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    }' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        mw_latency      100;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        queue_length    10;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        gop_cache       off;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    play {' conf/srs.conf;
+               ./objs/srs -c conf/srs.conf"]
+    environment:
+      CANDIDATE: ""
+    ports:
+      - "8000:8000/udp"
+      - "1935:1935"
+      - "1985:1985"
+      - "8080:8080"
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+

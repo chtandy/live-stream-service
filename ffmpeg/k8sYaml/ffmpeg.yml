@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffmpeg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ffmpeg
+  template:
+    metadata:
+      labels:
+        name: ffmpeg
+    spec:
+      hostname: ffmpeg
+      containers:
+      - name: ffmpeg
+        imagePullPolicy: IfNotPresent
+        image: linuxserver/ffmpeg:version-4.4-cli
+        command:
+          - /bin/bash
+          - -c
+          - ffmpeg -re -i ${RTMPFROM} ${CODEC} ${OUTPUTFORMAT} ${RTMPTO}
+        env:
+        - name: RTMPFROM
+          value: 'rtmp://out.xtj99.com/live/720'
+        - name: CODEC
+          value: '-c:a aac -c:v h264'
+        - name: OUTPUTFORMAT
+          value: '-f flv'
+        - name: RTMPTO
+          value: 'rtmp://a326dace498d5484b8124cc360792d70-801149410.ap-northeast-1.elb.amazonaws.com/live/720'
+        resources:
+          limits:
+            cpu: 2500m
+          requests:
+            cpu: 2500m

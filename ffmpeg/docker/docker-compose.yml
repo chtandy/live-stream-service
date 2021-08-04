@@ -1,0 +1,15 @@
+version: '3'
+services:
+  ffmpeg-forward:
+    image: linuxserver/ffmpeg:version-4.4-cli
+    container_name: ffmpeg-forward
+    hostname: ffmpeg-forward
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+    - ffmpeg -re -i ${RTMPFROM} ${CODEC} ${OUTPUTFORMAT} ${RTMPTO}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

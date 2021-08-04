@@ -1,0 +1,98 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wowza
+spec:
+  type: LoadBalancer
+  ports:
+    - name: p-1935
+      protocol: TCP
+      port: 1935
+      targetPort: 1935
+    - name: p-8086
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+    - name: p-8087
+      protocol: TCP
+      port: 8087
+      targetPort: 8087
+    - name: p-8088
+      protocol: TCP
+      port: 8088
+      targetPort: 8088
+  selector:
+    name: wowza
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wowza
+spec:
+  serviceName: wowza
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      name: wowza
+  template:
+    metadata:
+      labels:
+        name: wowza
+    spec:
+      containers:
+      - name: wowza
+        image: wowzamedia/wowza-streaming-engine-linux:4.8.12
+        imagePullPolicy: IfNotPresent
+        command: ["/sbin/entrypoint.sh"]
+        env:
+          - name: WSE_MGR_USER
+            value: wowza
+          - name: WSE_MGR_PASS
+            value: wowza
+          - name: WSE_LIC
+            value: ""
+          - name: WSE_IP_PARAM
+            value: "a6a7431827bd545729e8c19d835d8402-736467999.ap-northeast-1.elb.amazonaws.com"
+        ports:
+        - containerPort: 1935
+        - containerPort: 8086
+        - containerPort: 8087
+        - containerPort: 8088
+        volumeMounts:
+        - name: wowza-log
+          mountPath: /usr/local/WowzaStreamingEngine/logs
+        - name: wowza-conf
+          mountPath: "/usr/local/WowzaStreamingEngine-4.8.12+1/conf/live"
+      volumes:
+        - name: wowza-log
+          persistentVolumeClaim:
+            claimName: wowza-log
+        - name: wowza-conf
+          persistentVolumeClaim:
+            claimName: wowza-conf
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wowza-log
+spec:
+  storageClassName: gp2
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wowza-conf
+spec:
+  storageClassName: gp2
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

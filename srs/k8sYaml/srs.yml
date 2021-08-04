@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ossrs
+spec:
+  type: LoadBalancer
+  ports:
+    - name: ossrs-1935
+      protocol: TCP
+      port: 1935
+      targetPort: 1935
+    - name: ossrs-8000
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
+    - name: ossrs-1985
+      protocol: TCP
+      port: 1985
+      targetPort: 1985
+    - name: ossrs-8080
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    name: ossrs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ossrs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ossrs
+  template:
+    metadata:
+      labels:
+        name: ossrs
+    spec:
+      containers:
+      - name: ossrs
+        image: ossrs/srs:3
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash", "-c"]
+        args: ["sed  -i -e  '/vhost __defaultVhost__/a\\    tcp_nodelay     on;' conf/srs.conf;
+                sed  -i -e  '/tcp_nodelay/a\\    min_latency     on;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    }' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        mr off;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    publish {' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    }' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        mw_latency      100;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        queue_length    10;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\        gop_cache       off;' conf/srs.conf;
+                sed  -i -e  '/min_latency/a\\    play {' conf/srs.conf;
+               ./objs/srs -c conf/srs.conf"]
+        env:
+          - name: CANDIDATE
+            value: "a1f0f9b3dfc3d43a6b58914d3394c31f-1550269419.ap-northeast-1.elb.amazonaws.com"
+        ports:
+        - containerPort: 1935
+        - containerPort: 1985
+        - containerPort: 8000
+        - containerPort: 8080
