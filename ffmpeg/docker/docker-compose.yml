@@ -5,8 +5,10 @@ services:
     container_name: ffmpeg-forward
     hostname: ffmpeg-forward
     entrypoint: ["/bin/bash", "-c"]
-    command:
-    - ffmpeg -re -i ${RTMPFROM} ${CODEC} ${OUTPUTFORMAT} ${RTMPTO}
+    command: ["ffmpeg -re -i rtmp://out.xtj99.com/live/720 
+              -c:a aac -c:v h264 
+              -f flv 
+              rtmp://a326dace498d5484b8124cc360792d70-801149410.ap-northeast-1.elb.amazonaws.com/live/720"]
     restart: always
     logging:
       driver: "json-file"
