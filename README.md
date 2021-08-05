@@ -16,5 +16,6 @@
   - Real Time Streaming Protocol (RTSP)
 - WebRTC
   - 網頁即時通訊(Web Real-Time Communication)，是一個支援網頁瀏覽器進行實時語音對話或影片對話的API。
-### 架構圖
-![wowza 範例](./pic/typical-streaming-workflow-1500x718.png)
+### 架構圖 (wowza 範例)
+![wowza 範例](./pic/typical-streaming-workflow-1500x718.png).  
+![](./pic/livestream.png)
