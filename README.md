@@ -17,7 +17,7 @@
 - HLS:
   - 由Apple發起並最先支援於iOS/Safari，現在Android/Chrome最新版也加入支援，瀏覽器可以透過 hls.js廣泛支援(IE 11+)
 - Smooth Streaming：
-  - 微軟制定的標準，檔案格式須為IIS Smooth Streaming，因為不是MS粉絲所以就不研究。
+  - 微軟制定的標準，檔案格式須為IIS Smooth Streaming。
 - HDS:
   - HTTP Dynamic Streaming，由Adobe發起。
 - 向下支援：
