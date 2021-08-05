@@ -5,10 +5,8 @@ ffmpeg -i "rtmp://172.31.0.11:1935/source/111.stream"  -max_muxing_queue_size 10
 
 
 - wowza 不需重新編碼  `-c:a copy -c:v copy`
-- 
 ```
 ffmpeg -re -i rtmp://out.xtj99.com/live/720 -c:a copy -c:v copy -f flv rtmp://adfd4b1db7c624d418b12568336687fb-172053035.ap-northeast-1.elb.amazonaws.com/live/720
-ffmpeg -re -i rtmp://out.xtj99.com/live/720 -c:a aac -c:v h264 -f flv rtmp://adfd4b1db7c624d418b12568336687fb-172053035.ap-northeast-1.elb.amazonaws.com/live/720
 ```
 - srs 要重新編碼才能推 `-c:a aac -c:v h264`
 ```
