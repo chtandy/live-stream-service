@@ -22,3 +22,6 @@
   - HTTP Dynamic Streaming，由Adobe發起。
 - 向下支援：
   - 可透過Flash播放器與RTMP傳輸協定。
+---
+### 架構圖
+[wowza 範例](./pic/typical-streaming-workflow-1500x718.png)
