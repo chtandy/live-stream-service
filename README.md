@@ -12,8 +12,12 @@
 - HTTP-FLV
   - FLV (Flash Video) 是Adobe 公司推出的另一種視頻格式，是一種在網絡上傳輸的流媒體數據存儲容器格式。其格式相對簡單輕量，不需要很大的媒體頭部信息。整個FLV 由The FLV Header, The FLV Body 以及其它Tag 組成。因此加載速度極快。採用FLV 格式封裝的文件後綴為.flv.
   - HTTP-FLV 即將流媒體數據封裝成FLV 格式，然後通過HTTP 協議傳輸給客戶端.
-- RTMP:
-  - Real Time Messaging Protocol，由Adobe發起並支援於Flash中
+- RTMP:RTMP(Real Time Messaging Protocol)即時消息傳送協定是Adobe Systems公司為Flash播放程式和伺服器之間音訊、視頻和資料傳輸 開發的開放協議，共有五種變體
+  - RTMP：此標準協定會運行在 TCP 協定上，並且使用埠1935；
+  - RTMPS：RTMP 運行在 TLS/SSL 上。
+  - RTMPE：RTMP 運行在 Adobe 自行定義的加密協定上。
+  - RTMPT：使用 HTTP 將封包進行封裝以穿越防火牆；此時可以使用 RTMP, RTMPS 或 RTMPE。
+  - RTMFP：RTMP 運行在 UDP 上。
 - RTSP:
   - Real Time Streaming Protocol (RTSP)
 - WebRTC
