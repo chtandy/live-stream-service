@@ -30,3 +30,4 @@
 - ffmpeg 可以同時拉流, 推流. 所以可視為媒體端和用戶端
 - [各家RTSP格式](https://mofulls.pixnet.net/blog/post/359930523-%E5%90%84%E5%AE%B6rtsp%E6%A0%BC%E5%BC%8F)   
 - [How to connect to your Sony IP camera](https://camera-sdk.com/p_6716-how-to-connect-to-a-sony-camera.html)  
+- [VC-BC701P](https://www.lumens.com.tw/Download/VC-BC701P-User%20Manual-Chinese%202019-1121.pdf)  
