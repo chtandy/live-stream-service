@@ -12,3 +12,8 @@ ffmpeg -re -i rtmp://out.xtj99.com/live/720 -c:a copy -c:v copy -f flv rtmp://ad
 ```
 ffmpeg -re -i rtmp://out.xtj99.com/live/720 -c:a aac -c:v h264 -f flv rtmp://a1bf9a304267c463c937cb42211b323e-1994924086.ap-northeast-1.elb.amazonaws.com/live/720
 ```
+- 拉rtsp 推rtmp
+```
+ffmpeg -i "rtsp://192.168.0.99:8554/1" -vcodec copy -acodec copy -f flv "rtmp://127.0.0.1:1935/live/"
+ffmpeg -an -rtsp_transport tcp -i "[your rtsp link]" -tune zerolatency -vcodec libx264 -pix_fmt + -c:v copy -f flv "[Your rtmp link]"
+```
